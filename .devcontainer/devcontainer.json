@@ -1,13 +1,19 @@
 {
-  "name": "PostgreSQL Codespace",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "db",
-  "workspaceFolder": ".",
-  "extensions": [
-    "ms-azuretools.vscode-docker",
-    "ms-python.python",
-    "ms-vscode.node-debug2"
-  ],
-  "forwardPorts": [5432],
-  "postCreateCommand": "apt-get update && apt-get install -y postgresql-client"
+  "name": "PostgreSQL Dev Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql postgresql-contrib && .devcontainer/init_postgres.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "notify"
+    }
+  },
+  "forwardPorts": [5432]
 }
